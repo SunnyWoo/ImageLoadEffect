@@ -1,10 +1,65 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
+		<link rel="stylesheet" href="css/main.css" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
 	</head>
+
 	<body>
-		
+		<div id="rowList" class="row pic3">
+		</div>
+
+		<script type="text/javascript" src="js/jquery-3.2.1.slim.min.js"></script>
+		<script type="text/javascript">
+			
+			var imgList = [
+				"http://56lvmbzh.droibaascdn.com/droi/56lvmbzhOSd5VOT1TNyu3OBXp8oVaHBnlQCN3ToB/895575926968307712/598c24ea85c265245.jpg",
+				"http://56lvmbzh.droibaascdn.com/droi/56lvmbzhOSd5VOT1TNyu3OBXp8oVaHBnlQCN3ToB/895575928688230400/598c24ea85f8e8217.jpg",
+				"http://56lvmbzh.droibaascdn.com/droi/56lvmbzhOSd5VOT1TNyu3OBXp8oVaHBnlQCN3ToB/895575930797707264/598c24ea8617e2486.jpg",
+				"http://56lvmbzh.droibaascdn.com/droi/56lvmbzhOSd5VOT1TNyu3OBXp8oVaHBnlQCN3ToB/895575933506277376/598c24ea863c51554.jpg",
+				"http://56lvmbzh.droibaascdn.com/droi/56lvmbzhOSd5VOT1TNyu3OBXp8oVaHBnlQCN3ToB/895575936371122176/598c24ea865279731.jpg",
+				"http://56lvmbzh.droibaascdn.com/droi/56lvmbzhOSd5VOT1TNyu3OBXp8oVaHBnlQCN3ToB/895575937634938880/598c24ea866901074.jpg",
+				"http://56lvmbzh.droibaascdn.com/droi/56lvmbzhOSd5VOT1TNyu3OBXp8oVaHBnlQCN3ToB/895575939165601792/598c24ea867f08783.jpg"
+			];
+			
+			function loadImage(src, callback) {
+				var img = document.createElement("img");
+				img.src = src;
+				img.addEventListener("load", function() {
+					if(this.complete) {
+						callback();
+					}
+				});
+			}
+			
+			var bindHtml = function() {
+				var html = '';
+				for(var i = 0; i < imgList.length; i++) {
+					html += '<span class="col-xs-4 wx-pip middle-xs"><span><img data-src="' + imgList[i] + '" /></span></span>';
+				}
+				$("#rowList").html(html);
+
+				//循环判断所有的img
+				$("#rowList img").each(function() {
+					var _this = $(this);
+					if(_this.attr("src") == undefined) {
+						var _src = _this.attr("data-src");
+						loadImage(_src, function() {
+							//载入成功后执行 添加延迟 使用中可删除
+							setTimeout(function() {
+								_this.attr("src", _src);
+								_this.parent().css("background-image", "none");
+							}, 400);
+						});
+					}
+				});
+			};
+
+			bindHtml();
+		</script>
 	</body>
+
 </html>
